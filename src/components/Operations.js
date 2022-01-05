@@ -11,7 +11,7 @@ class Operations extends Component {
       vendor: '',
       category: '',
       redirect: false,
-      // totalAmount: this.props.totalAmount,
+      totalAmount: this.props.totalAmount,
     };
   }
   handleInputChange = (event) => {
@@ -22,22 +22,22 @@ class Operations extends Component {
   };
 
   depositAmount = () => {
+    this.setState({ redirect: true });
     this.componentDidMount();
   };
   drawAmount = () => {
-    this.setState({
-      amount: this.state.amount * -1,
-    }, this.componentDidMount);
-   
+    this.setState(
+      {
+        amount: this.state.amount * -1,
+        redirect: true,
+      },
+      this.componentDidMount
+    );
   };
 
   async componentDidMount() {
-
-  
     if (this.state.amount !== 0) {
-    
       const save = this.state;
-
 
       const resp = await axios.post('http://localhost:5500/transaction', save);
       console.log(resp.data);
@@ -49,7 +49,6 @@ class Operations extends Component {
       this.props.depositAmount();
     }
   }
-
 
   render() {
     return (
@@ -80,7 +79,7 @@ class Operations extends Component {
         />
         <button onClick={this.depositAmount}>Deposit</button>
         <button onClick={this.drawAmount}>WithDraw</button>
-        {this.state.redirect ? <Redirect to="/transactions" /> : null}
+        {this.state.redirect ? <Redirect to="/" /> : null}
       </div>
     );
   }
