@@ -34,9 +34,11 @@ class App extends Component {
     this.getTransactions();
   };
 
-  deleteTransaction = async (transaction) => {
-    await axios.delete('http://localhost:5500/transaction',transaction);
-    console.log(transaction);
+  deleteTransaction = async (id) => {
+    await axios.delete('http://localhost:5500/transaction',{
+      data:{id}
+  });
+    console.log(id);
     this.getTransactions();
   };
   render() {
