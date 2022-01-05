@@ -8,36 +8,45 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [
-       
-      ],
-      totalAmount: 0,
+      data: [],
+      balance: 0,
     };
   }
 
-  async componentDidMount() {
-    // (this.state.data).map(t => {
-    //   this.setState({totalAmount: this.state.totalAmount+=t.amount})
-    // })
+  getBalance = () => {
+    let newBalance = 0;
+    for (let d of this.state.data) {
+      newBalance += d.amount;
+    }
+    this.setState({
+      balance: newBalance,
+    });
+  };
 
+  async componentDidMount() {
     await this.getTransactions();
+    this.getBalance();
   }
   async getTransactions() {
     const response = await axios.get('http://localhost:5500/transactions');
+    this.getBalance();
     this.setState({ data: response.data });
   }
 
   drawAmount = () => {
+
     this.getTransactions();
+  
   };
   depositAmount = () => {
     this.getTransactions();
+   
   };
 
   deleteTransaction = async (id) => {
-    await axios.delete('http://localhost:5500/transaction',{
-      data:{id}
-  });
+    await axios.delete('http://localhost:5500/transaction', {
+      data: { id },
+    });
     console.log(id);
     this.getTransactions();
   };
@@ -48,7 +57,7 @@ class App extends Component {
           <div className="App">
             <Link to="/"> Transaction </Link>
             <Link to="/operations"> Operations </Link>
-            <div>{this.state.totalAmount}</div>
+            <div>{this.state.balance}</div>
 
             <Route
               exact
@@ -68,6 +77,7 @@ class App extends Component {
                   data={this.state.data}
                   drawAmount={this.drawAmount}
                   depositAmount={this.depositAmount}
+              
                 />
               )}
             />

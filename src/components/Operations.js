@@ -32,7 +32,10 @@ class Operations extends Component {
   };
 
   async componentDidMount() {
+
+  
     if (this.state.amount !== 0) {
+    
       const save = this.state;
 
 
@@ -46,11 +49,7 @@ class Operations extends Component {
       this.props.depositAmount();
     }
   }
-  // amountDeposit() {
-  //   this.props.data.map((t) => {
-  //     this.setState({ totalAmount: t.amount+this.state.amount});
-  //   });
-  // }
+
 
   render() {
     return (
