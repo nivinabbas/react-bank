@@ -4,16 +4,13 @@ import Transaction from './Transaction'
 
 class Transactions extends Component {
   constructor() {
-    super()
-
-    this.state = {
-      
-    }
+    super();
   }
   
   render(){
+    
     return (
-        <Transaction key={this.props.data} data={this.props.data}/>
+        <Transaction key={this.props.data} transaction={this.props.data} data={this.props.data} deleteTransaction={this.props.deleteTransaction}/>
     )
   }
   

@@ -11,7 +11,7 @@ router.get('/transactions', function (request, response) {
 });
 
 router.post('/transaction', function (request, response) {
-    console.log(request.body);
+  
     let addTransaction = new Transaction({
        
         amount: request.body.amount,
@@ -25,11 +25,11 @@ router.post('/transaction', function (request, response) {
 
     });
 
-router.delete('/transaction', function (request, response) {
+router.delete('/transaction',  function (request, response) {
     
     let transaction= request.body;
-
-    Transaction.findOneAndDelete({ _id: transaction._id}, function (err, transaction) {});
+    console.log(transaction);
+    Transaction.findOneAndDelete({ _id: request.body._id}, function (err, transaction) {});
   
     response.end();
 });

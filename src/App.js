@@ -9,10 +9,7 @@ class App extends Component {
     super();
     this.state = {
       data: [
-        { amount: 3200, vendor: 'Elevation', category: 'Salary' },
-        { amount: -7, vendor: 'Runescape', category: 'Entertainment' },
-        { amount: -20, vendor: 'Subway', category: 'Food' },
-        { amount: -98, vendor: 'La Baguetterie', category: 'Food' },
+       
       ],
       totalAmount: 0,
     };
@@ -38,9 +35,8 @@ class App extends Component {
   };
 
   deleteTransaction = async (transaction) => {
-    await axios.delete('http://localhost:5500/transaction', {
-      data: transaction,
-    });
+    await axios.delete('http://localhost:5500/transaction',transaction);
+    console.log(transaction);
     this.getTransactions();
   };
   render() {

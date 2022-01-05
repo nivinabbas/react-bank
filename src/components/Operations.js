@@ -27,14 +27,14 @@ class Operations extends Component {
   drawAmount = () => {
     this.setState({
       amount: this.state.amount * -1,
-    });
-    this.componentDidMount();
+    }, this.componentDidMount);
+   
   };
 
   async componentDidMount() {
     if (this.state.amount !== 0) {
       const save = this.state;
-      console.log(save);
+
 
       const resp = await axios.post('http://localhost:5500/transaction', save);
       console.log(resp.data);
