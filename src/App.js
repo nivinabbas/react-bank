@@ -1,6 +1,7 @@
 import { Component } from 'react/cjs/react.production.min';
 import Operations from './components/Operations';
 import Transactions from './components/Transactions';
+import Category from './components/Category';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -55,6 +56,7 @@ class App extends Component {
           <div className="App">
             <Link to="/"> Transaction </Link>
             <Link to="/operations"> Operations </Link>
+            <Link to="/category">Categories</Link>
             <div>{this.state.balance}</div>
 
             <Route
@@ -77,6 +79,11 @@ class App extends Component {
                   depositAmount={this.depositAmount}
                 />
               )}
+            />
+            <Route
+              exact
+              path="/category"
+              render={() => <Category data={this.state.data}></Category>}
             />
           </div>
         </Router>
