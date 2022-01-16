@@ -2,8 +2,10 @@ import { Component } from 'react/cjs/react.production.min';
 import Operations from './components/Operations';
 import Transactions from './components/Transactions';
 import Category from './components/Category';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
+import { Tabs } from 'antd';
+const { TabPane } = Tabs;
 
 class App extends Component {
   constructor() {
@@ -11,9 +13,16 @@ class App extends Component {
     this.state = {
       data: [],
       balance: 0,
+      activeTab: 'transactions',
     };
   }
 
+  setActiveTab = (activeTab) => {
+
+    this.setState({
+      activeTab,
+    });
+  };
   getBalance = () => {
     let newBalance = 0;
     for (let d of this.state.data) {
@@ -29,10 +38,12 @@ class App extends Component {
     this.getBalance();
   }
   async getTransactions() {
+  
     const response = await axios.get('http://localhost:5500/transactions');
 
     this.setState({ data: response.data });
     this.getBalance();
+    this.setActiveTab('transactions');
   }
 
   drawAmount = () => {
@@ -51,45 +62,40 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="App">
-        <Router>
-          <div className="App">
-            <Link to="/"> Transaction </Link>
-            <Link to="/operations"> Operations </Link>
-            <Link to="/category">Categories</Link>
-            <div>{this.state.balance}</div>
-
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Transactions
-                  data={this.state.data}
-                  deleteTransaction={this.deleteTransaction}
-                />
-              )}
+      <div>
+          <div
+              className={
+                this.state.balance > 500 ? 'totalAmountGreen' : 'totalAmountRed'
+              }
+            >
+              Total Amount : {this.state.balance}
+            </div>
+        <Tabs
+          activeKey={this.state.activeTab}
+          onTabClick={(e) => this.setActiveTab(e)}
+          centered
+        >
+           
+          <TabPane tab="Transactions" key="transactions">
+         
+            <Transactions
+              data={this.state.data}
+              deleteTransaction={this.deleteTransaction}
             />
-            <Route
-              exact
-              path="/operations"
-              render={() => (
-                <Operations
-                  data={this.state.data}
-                  drawAmount={this.drawAmount}
-                  depositAmount={this.depositAmount}
-                />
-              )}
+          </TabPane>
+          <TabPane tab="Operations" key="operations">
+            <Operations
+              data={this.state.data}
+              drawAmount={this.drawAmount}
+              depositAmount={this.depositAmount}
             />
-            <Route
-              exact
-              path="/category"
-              render={() => <Category data={this.state.data}></Category>}
-            />
-          </div>
-        </Router>
+          </TabPane>
+          <TabPane tab="Categories" key="categories">
+            <Category data={this.state.data} />
+          </TabPane>
+        </Tabs>
       </div>
     );
   }
 }
-
 export default App;

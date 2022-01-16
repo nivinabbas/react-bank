@@ -1,4 +1,9 @@
-import { Component } from 'react/cjs/react.production.min';
+import { Component } from 'react';
+// import './styles.css';
+import { Card ,Row,Col} from 'antd';
+import { DeleteTwoTone } from '@ant-design/icons';
+
+const { Meta } = Card;
 
 class Transaction extends Component {
   constructor() {
@@ -6,26 +11,34 @@ class Transaction extends Component {
     this.state = {};
   }
 
-
-deleteTransaction = (key) =>
-{
-  console.log(this.props.data);
-    this.props.deleteTransaction(this.props.data._id)
-    
-}
+  deleteTransaction = (key) => {
+  
+    this.props.deleteTransaction(this.props.data._id);
+  };
 
   render() {
     return (
-      <div className="transaction">
-        {this.props.data.map((t) => (
-          <div key={t._id}>
-            <span>{t.amount} </span>
-            <span>{t.vendor} </span>
-            <span>{t.category} </span>
-            <button onClick={()=>this.props.deleteTransaction(t._id)}>Delete</button>
-          </div>
+      <Row className="transaction" gutter={[16,16]}>
+        {this.props.data.map((t,index) => (
+          <Col span={6}  key={index}>
+          <Card
+            key={t._id}
+            style={{ width: 300 }}
+            actions={[
+              <DeleteTwoTone
+                key="delete"
+                twoToneColor="red"
+                onClick={() => this.props.deleteTransaction(t._id)}
+              />,
+            ]}
+          >
+            <Meta title="Amount" description={t.amount} />
+            <Meta title="Vendor" description={t.vendor} />
+            <Meta title="Category" description={t.category} />
+          </Card>
+          </Col>
         ))}
-      </div>
+      </Row>
     );
   }
 }

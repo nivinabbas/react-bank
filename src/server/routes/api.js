@@ -22,7 +22,7 @@ router.post('/transaction', function (request, response) {
 
 router.delete('/transaction', async function (request, response) {
   const {id} = request.body;
-  console.log(id);
+
  await  Transaction.findOneAndDelete({_id:id});
 
   response.end();
