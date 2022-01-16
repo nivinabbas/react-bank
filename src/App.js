@@ -29,25 +29,23 @@ class App extends Component {
   }
   async getTransactions() {
     const response = await axios.get('http://localhost:5500/transactions');
-    this.getBalance();
+
     this.setState({ data: response.data });
+    this.getBalance();
   }
 
   drawAmount = () => {
-
     this.getTransactions();
-  
   };
   depositAmount = () => {
     this.getTransactions();
-   
   };
 
   deleteTransaction = async (id) => {
     await axios.delete('http://localhost:5500/transaction', {
       data: { id },
     });
-    console.log(id);
+
     this.getTransactions();
   };
   render() {
@@ -77,7 +75,6 @@ class App extends Component {
                   data={this.state.data}
                   drawAmount={this.drawAmount}
                   depositAmount={this.depositAmount}
-              
                 />
               )}
             />

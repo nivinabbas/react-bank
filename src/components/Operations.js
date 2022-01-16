@@ -11,7 +11,7 @@ class Operations extends Component {
       vendor: '',
       category: '',
       redirect: false,
-      totalAmount: this.props.totalAmount,
+      // totalAmount: this.props.totalAmount,
     };
   }
   handleInputChange = (event) => {
@@ -40,7 +40,7 @@ class Operations extends Component {
       const save = this.state;
 
       const resp = await axios.post('http://localhost:5500/transaction', save);
-      console.log(resp.data);
+
       this.setState({
         amount: 0,
         vendor: '',
