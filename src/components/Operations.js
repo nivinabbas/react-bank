@@ -16,7 +16,6 @@ class Operations extends Component {
       amount: 0,
       vendor: '',
       category: '',
-      redirect: false,
     };
   }
   handleInputChange = (value, name) => {

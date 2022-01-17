@@ -29,7 +29,7 @@ getTotalSum=()=>{
    
         {Object.keys(sumofCategory).map((category,index) => (
           <div className='categoryItem' key={index}>
-             <Progress type="circle" status={sumofCategory[category]<0?"exception":"success"} percent={Math.abs(sumofCategory[category])/this.getTotalSum()*100} format={percent => `${sumofCategory[category]}`} />
+             <Progress type="circle" status={sumofCategory[category]<0?"exception":"success"} percent={Math.abs(sumofCategory[category])/this.getTotalSum()*100} format={() => `${sumofCategory[category]}`} />
           <p >
             {category} 
           </p>
